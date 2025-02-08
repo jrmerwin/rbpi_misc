@@ -1,0 +1,31 @@
+import RPi.GPIO as GPIO
+import time
+
+# Define the GPIO pins for the two lights
+LIGHT1_PIN = 17  # Adjust to your wiring
+LIGHT2_PIN = 27  # Adjust to your wiring
+
+# Set up the GPIO mode and pins
+GPIO.setmode(GPIO.BCM)  # Use BCM numbering; use GPIO.BOARD for physical pin numbers
+GPIO.setup(LIGHT1_PIN, GPIO.OUT)
+GPIO.setup(LIGHT2_PIN, GPIO.OUT)
+
+try:
+    while True:
+        # Turn on LIGHT1 and turn off LIGHT2
+        GPIO.output(LIGHT1_PIN, GPIO.HIGH)
+        GPIO.output(LIGHT2_PIN, GPIO.LOW)
+        time.sleep(1)  # Wait for 1 second
+        
+        # Turn on LIGHT2 and turn off LIGHT1
+        GPIO.output(LIGHT1_PIN, GPIO.LOW)
+        GPIO.output(LIGHT2_PIN, GPIO.HIGH)
+        time.sleep(1)  # Wait for 1 second
+
+except KeyboardInterrupt:
+    # Exit the loop when a keyboard interrupt (Ctrl+C) is detected
+    print("Program interrupted by user.")
+
+finally:
+    # Clean up the GPIO settings before exiting
+    GPIO.cleanup()
